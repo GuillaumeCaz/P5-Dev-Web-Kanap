@@ -20,13 +20,7 @@
         </article>
       </a>`
     }
-    const lien = document.querySelector("article");
-    lien.addEventListener('click', () =>{
-      console.log(lien);
-      let params = new URL(document.location).searchParams;
-      let id =params.get("id");
-    console.log(id);
-    })
+    
     
   })
   .catch(function(err) {
