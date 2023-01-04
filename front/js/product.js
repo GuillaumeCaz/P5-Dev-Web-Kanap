@@ -52,6 +52,55 @@ fetch("http://localhost:3000/api/products/"+id).then(function(res) {
             document.querySelector("select").innerHTML += 
             `<option value="${product.colors[i]}">${product.colors[i]}</option>`
         }
+         //-----------------------------
+          // Entrée des données dans le Local Storage
+          //---------------------------------
+        function saveBasket(basket){
+          localStorage.setItem("basket",JSON.stringify(basket))
+      
+        }
+      
+      
+        function getBasket(){
+          let basket =  localStorage.getItem("basket");
+          if(basket == null){
+            return [];
+          }else{
+            return JSON.parse(basket);
+          }
+        }
+      
+      
+        function addBasket(product){
+          let basket = getBasket();
+          let foundProduct = basket.find(p => (p[0] == product[0])&&(p[1] == product[1]))
+          if (foundProduct != undefined){
+            foundProduct[2] = parseFloat(foundProduct[2]) + parseFloat(document.getElementById("quantity").value); //a modifier + la valeur
+          }else {
+            product.quantity=1;//a modifier + la valeur
+            basket.push(product);
+          }
+          saveBasket(basket); 
+      
+        }
+
+        const submit = document.getElementById("addToCart");
+        submit.addEventListener("click", () =>{
+      if ((document.getElementById("colors").value != "") && (document.getElementById("quantity").value != "0")){
+        
+        
+        
+        let color = document.getElementById('colors').value;
+        let quantity = document.getElementById('quantity').value;
+        addBasket([id,color,quantity]);
+
+
+
+        
+       }else{
+        alert("Veuillez remplir tout les champs");
+       }})
+        
   })
   .catch(function(err) {
     // Une erreur est survenue
