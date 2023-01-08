@@ -8,6 +8,7 @@ fetch("http://localhost:3000/api/products/"+id).then(function(res) {
     
   })
   .then( function(product) { 
+    
     document.querySelector(".item").innerHTML +=
     `
     <article>
@@ -55,7 +56,14 @@ fetch("http://localhost:3000/api/products/"+id).then(function(res) {
          //-----------------------------
           // Entrée des données dans le Local Storage
           //---------------------------------
-        function saveBasket(basket){
+          class Product {
+            constructor(id, color, quantity) {
+              this.id = id;
+              this.color = color;
+              this.quantity = quantity;
+            }
+          }
+          function saveBasket(basket){
           localStorage.setItem("basket",JSON.stringify(basket))
       
         }
@@ -73,11 +81,11 @@ fetch("http://localhost:3000/api/products/"+id).then(function(res) {
       
         function addBasket(product){
           let basket = getBasket();
-          let foundProduct = basket.find(p => (p[0] == product[0])&&(p[1] == product[1]))
+          let foundProduct = basket.find(p => (p.id == product.id)&&(p.color == product.color))
           if (foundProduct != undefined){
-            foundProduct[2] = parseFloat(foundProduct[2]) + parseFloat(document.getElementById("quantity").value); //a modifier + la valeur
+            foundProduct.quantity = parseFloat(foundProduct.quantity) + parseFloat(document.getElementById("quantity").value);
           }else {
-            product.quantity=1;//a modifier + la valeur
+            product.quantity = document.getElementById("quantity").value;
             basket.push(product);
           }
           saveBasket(basket); 
@@ -92,8 +100,10 @@ fetch("http://localhost:3000/api/products/"+id).then(function(res) {
         
         let color = document.getElementById('colors').value;
         let quantity = document.getElementById('quantity').value;
-        addBasket([id,color,quantity]);
-
+        addBasket(new Product(id, color, quantity));
+        //addBasket([id,color,quantity]);
+        
+        
 
 
         
