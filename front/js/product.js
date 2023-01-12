@@ -102,8 +102,8 @@ fetch("http://localhost:3000/api/products/"+id).then(function(res) {
         let quantity = document.getElementById('quantity').value;
         addBasket(new Product(id, color, quantity));
         //addBasket([id,color,quantity]);
-        
-        
+        alert("Votre commande a été ajoutée au panier");
+        window.location.reload();
 
 
         
