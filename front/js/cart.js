@@ -112,15 +112,17 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
   //-------------------------------------------------
   
   const form = {
-    firstName: firstName,
-    lastName: lastName,
-    address: address,
-    city: city,
-    email: email
-};
-
+          firstName: firstName,
+          lastName: lastName,
+          address: address,
+          city: city,
+          email: email
+          };
+//Constitution du cartIDS 
   const cartIds = [];
-  
+  for (let i=0; i < basket.length; i++ ){
+           cartIds.push(basket[i].id);
+          }  
   
   fetch("http://localhost:3000/api/products/order", {
            method: "POST",
@@ -129,7 +131,7 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
            },
            body: JSON.stringify({
                contact: form,
-               products: cartIds
+               products: cartIds,
            })
        })
        .then((response) => {
@@ -138,16 +140,27 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
            }
        })
        .then((data)=>{
-        console.log(data);
+        
         const clientForm = document.querySelector(".cart__order__form")
         clientForm.addEventListener('submit', function(e){
           e.preventDefault();
-
-          firstName = document.getElementById('firstName').value;
-          lastName = document.getElementById('lastName').value;
-          address = document.getElementById('address').value;
-          city = document.getElementById('city').value;
-          email = document.getElementById('email').value;
+          const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          
+          data.contact.firstName = document.getElementById('firstName').value;
+          data.contact.lastName = document.getElementById('lastName').value;
+          data.contact.address = document.getElementById('address').value;
+          data.contact.city = document.getElementById('city').value;
+          data.contact.email = document.getElementById('email').value;
+          console.log(data);
+          if (emailRegex.test(data.contact.email)){
+            alert("Contact enregistré!");
+            
+          }else{
+            alert("Veuillez renseigner une adresse mail valide");
+          }
+          
+          
+        
        })
       })
        //.then((value) => location.href='http://localhost:3000/confirmation.html')
