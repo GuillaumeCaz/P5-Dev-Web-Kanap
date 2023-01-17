@@ -111,58 +111,57 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
   // Envoie et traitement des données du formulaire
   //-------------------------------------------------
   
+  const clientForm = document.querySelector(".cart__order__form");
+  clientForm.addEventListener('submit', function(e) {
+  e.preventDefault();
+  const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+  const adressRegex = /^[0-9]/;
+  
+  const firstName = document.getElementById('firstName').value;
+  const lastName = document.getElementById('lastName').value;
+  const address = document.getElementById('address').value;
+  const city = document.getElementById('city').value;
+  const email = document.getElementById('email').value;
+  
+  if (!emailRegex.test(email)) {
+    alert("Veuillez renseigner une adresse mail valide");
+    return;
+  }
+  if (!adressRegex.test(address)) {
+    alert("Veuillez renseigner une adresse valide");
+    return;
+  }
+
   const form = {
-          firstName: firstName,
-          lastName: lastName,
-          address: address,
-          city: city,
-          email: email
-          };
-//Constitution du cartIDS 
+    firstName: firstName,
+    lastName: lastName,
+    address: address,
+    city: city,
+    email: email
+  };
   const cartIds = [];
   for (let i=0; i < basket.length; i++ ){
-           cartIds.push(basket[i].id);
-          }  
+    cartIds.push(basket[i].id);
+  }  
   
   fetch("http://localhost:3000/api/products/order", {
-           method: "POST",
-           headers: {
-               "Content-Type" : "application/json"
-           },
-           body: JSON.stringify({
-               contact: form,
-               products: cartIds,
-           })
-       })
-       .then((response) => {
-           if (response.ok) {
-               return response.json();
-           }
-       })
-       .then((data)=>{
-        
-        const clientForm = document.querySelector(".cart__order__form")
-        clientForm.addEventListener('submit', function(e){
-          e.preventDefault();
-          const emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          
-          data.contact.firstName = document.getElementById('firstName').value;
-          data.contact.lastName = document.getElementById('lastName').value;
-          data.contact.address = document.getElementById('address').value;
-          data.contact.city = document.getElementById('city').value;
-          data.contact.email = document.getElementById('email').value;
-          console.log(data);
-          if (emailRegex.test(data.contact.email)){
-            alert("Contact enregistré!");
-            
-          }else{
-            alert("Veuillez renseigner une adresse mail valide");
-          }
-          
-          
-        
-       })
-      })
-       //.then((value) => location.href='http://localhost:3000/confirmation.html')
-
-       
+    method: "POST",
+    headers: {
+      "Content-Type" : "application/json"
+    },
+    body: JSON.stringify({
+      contact: form,
+      products: cartIds
+    })
+  })
+  .then(response => {
+    if (response.ok) {
+      return response.json();
+  }
+  })
+  .then(data => {
+    console.log(data);
+    alert("Contact enregistré!");
+  })
+  
+});
