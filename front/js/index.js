@@ -1,4 +1,4 @@
-  
+  // Fetch d'API en méthode GET pour récupérer les données des éléments
 
   fetch("http://localhost:3000/api/products").then(function(res) {
     if (res.ok) {
@@ -7,7 +7,7 @@
     
   })
   .then( function(value) {
-    console.table(value);
+    // affichage des éléments dynamique 
     for (let i=0 ; i < value.length; i++){
         let objet = value[i];
         document.getElementById('items').innerHTML += 

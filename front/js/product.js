@@ -1,6 +1,7 @@
+// Aller chercher l'Id du produit dans l'URl
 const id = new URL(document.location).searchParams.get("id");
 
-
+// Requète à l'API pour récupérer les  infos du produit correspondant
 fetch("http://localhost:3000/api/products/"+id).then(function(res) {
     if (res.ok) {
       return res.json();
@@ -8,7 +9,7 @@ fetch("http://localhost:3000/api/products/"+id).then(function(res) {
     
   })
   .then( function(product) { 
-    
+    //Ajout de l'HTML et des éléments du produit
     document.querySelector(".item").innerHTML +=
     `
     <article>
@@ -63,12 +64,13 @@ fetch("http://localhost:3000/api/products/"+id).then(function(res) {
               this.quantity = quantity;
             }
           }
+          // Fonction pour sauvegarder le panier (passage en JSON pour pouvoir stocker plusieurs valeurs)
           function saveBasket(basket){
           localStorage.setItem("basket",JSON.stringify(basket))
       
         }
       
-      
+        // Fonction pour récupérer les données du panier (récupération du langage JSON)
         function getBasket(){
           let basket =  localStorage.getItem("basket");
           if(basket == null){
@@ -78,7 +80,7 @@ fetch("http://localhost:3000/api/products/"+id).then(function(res) {
           }
         }
       
-      
+      // Fonctio, d'ajout d'un élément au panier
         function addBasket(product){
           let basket = getBasket();
           let foundProduct = basket.find(p => (p.id == product.id)&&(p.color == product.color))
@@ -91,7 +93,7 @@ fetch("http://localhost:3000/api/products/"+id).then(function(res) {
           saveBasket(basket); 
       
         }
-
+        //Ajout d'un élément au panier
         const submit = document.getElementById("addToCart");
         submit.addEventListener("click", () =>{
       if ((document.getElementById("colors").value != "") && (document.getElementById("quantity").value != "0")){
