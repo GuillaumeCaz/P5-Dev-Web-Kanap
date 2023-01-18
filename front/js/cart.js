@@ -162,6 +162,7 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
   .then(data => {
     console.log(data);
     alert("Contact enregistré!");
+    window.location.href = `confirmation.html?orderId=${data.orderId}`;
   })
   
 });
