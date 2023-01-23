@@ -12,7 +12,8 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
     //Met a jour le total
     getTotal(product);
     //Affichage des elements du panier
-
+    console.log (basket.length);
+    if (basket.length > 0){
     for (let i=0 ; i < basket.length; i++){
             //Recherche des correspondances entre le panier et les elements de l'API
             let foundId = product.find(product=> (product._id == basket[i].id));
@@ -43,8 +44,10 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
                 </div>
               </article>`
   }
-
-  
+    }else{
+      document.querySelector("h1").textContent += " est vide";
+    //ajouter le panier est  vide  
+  }
   
   //Modification des inputs de quantité dans le panier
   const inputs = document.querySelectorAll('.itemQuantity');
