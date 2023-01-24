@@ -45,8 +45,8 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
               </article>`
   }
     }else{
+      //le panier est  vide 
       document.querySelector("h1").textContent += " est vide";
-    //ajouter le panier est  vide  
   }
   
   //Modification des inputs de quantité dans le panier

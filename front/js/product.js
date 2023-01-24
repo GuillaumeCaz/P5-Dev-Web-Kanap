@@ -80,7 +80,7 @@ fetch("http://localhost:3000/api/products/"+id).then(function(res) {
           }
         }
       
-      // Fonctio, d'ajout d'un élément au panier
+      // Fonction d'ajout d'un élément au panier
         function addBasket(product){
           let basket = getBasket();
           let foundProduct = basket.find(p => (p.id == product.id)&&(p.color == product.color))
