@@ -1,6 +1,10 @@
 // Récupération du panier
-let basket = JSON.parse(localStorage.getItem("basket"));
 
+let basket = JSON.parse(localStorage.getItem("basket"));
+//Panier vide 
+if (basket == null){
+  document.querySelector("h1").textContent += " est vide";
+}
 // Fetch de type Get pour récupérer les informations de l'API
 fetch("http://localhost:3000/api/products/").then(function(res) {
     if (res.ok) {
@@ -12,7 +16,9 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
     //Met a jour le total
     getTotal(product);
     //Affichage des elements du panier
-    if (basket.length != 0){
+    
+    
+    if (basket.length != 0 ){
     for (let i=0 ; i < basket.length; i++){
             //Recherche des correspondances entre le panier et les elements de l'API
             let foundId = product.find(product=> (product._id == basket[i].id));
@@ -114,7 +120,6 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
     quantity.innerHTML = totalQuantity;
     let price = document.getElementById('totalPrice');
     price.innerHTML = totalPrice;
-    console.log("price",price);
   }
   
   //-------------------------------------------------
