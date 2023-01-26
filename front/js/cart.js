@@ -1,6 +1,6 @@
 // Récupération du panier
-
 let basket = JSON.parse(localStorage.getItem("basket"));
+
 // Fetch de type Get pour récupérer les informations de l'API
 fetch("http://localhost:3000/api/products/").then(function(res) {
     if (res.ok) {
@@ -12,8 +12,7 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
     //Met a jour le total
     getTotal(product);
     //Affichage des elements du panier
-    console.log (basket.length);
-    if (basket.length > 0){
+    if (basket.length != 0){
     for (let i=0 ; i < basket.length; i++){
             //Recherche des correspondances entre le panier et les elements de l'API
             let foundId = product.find(product=> (product._id == basket[i].id));
@@ -138,22 +137,28 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
   const email = document.getElementById('email').value;
   // Tests Regex
   if (!emailRegex.test(email)) {
-    alert("Veuillez renseigner une adresse mail valide");
-    return;
+    document.querySelector("#emailErrorMsg").textContent = "Veuillez renseigner une adresse mail valide";
+  }else {
+    document.querySelector("#emailErrorMsg").textContent = "";
   }
   if (!adressRegex.test(address)) {
-    alert("Veuillez renseigner une adresse valide");
-    return;
+    document.querySelector("#addressErrorMsg").textContent = "Veuillez renseigner une adresse valide";
+  }else {
+    document.querySelector("#addressErrorMsg").textContent = "";
   }
   if (!nameRegex.test(firstName)) {
-    alert("Veuillez renseigner un prénom valide");
-    return;
+    document.querySelector("#firstNameErrorMsg").textContent = "Veuillez renseigner un prénom valide";
+  }else {
+    document.querySelector("#firstNameErrorMsg").textContent = "";
   }
   if (!nameRegex.test(lastName)) {
-    alert("Veuillez renseigner un nom valide");
+    document.querySelector("#lastNameErrorMsg").textContent = "Veuillez renseigner un nom valide";
+  }else {
+    document.querySelector("#lastNameErrorMsg").textContent = "";
+  }
+  if (!nameRegex.test(lastName) || !emailRegex.test(email) || !adressRegex.test(address) || !nameRegex.test(firstName)){
     return;
   }
-
 
   const form = {
     firstName: firstName,
@@ -185,6 +190,7 @@ fetch("http://localhost:3000/api/products/").then(function(res) {
   })
   .then(data => {
     alert("Contact enregistré!");
+    console.log(data);
     //Lien vers la page confirmation avec l'ajout de l'id de commande
     window.location.href = `confirmation.html?orderId=${data.orderId}`;
   })
