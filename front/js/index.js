@@ -1,6 +1,7 @@
   // Fetch d'API en méthode GET pour récupérer les données des éléments
 
-  fetch("http://localhost:3000/api/products").then(function(res) {
+  fetch("http://localhost:3000/api/products")
+  .then(function(res) {
     if (res.ok) {
       return res.json();
     }
